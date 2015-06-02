@@ -7,6 +7,7 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 
 /**
@@ -20,6 +21,8 @@ import android.view.ViewGroup;
 public class createEntryWithManualInput extends Fragment {
 
     private OnFragmentInteractionListener mListener;
+    private EditText companyName;
+    private EditText companyAddress;
 
     // TODO: Rename and change types and number of parameters
     public static createEntryWithManualInput newInstance(String param1, String param2) {
@@ -35,13 +38,13 @@ public class createEntryWithManualInput extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_create_entry_with_manual_input, container, false);
+        companyName = (EditText) rootView.findViewById(R.id.inputCompanyName);
+        companyAddress = (EditText) rootView.findViewById(R.id.inputCompanyAddress);
         return rootView;
     }
 
@@ -67,6 +70,14 @@ public class createEntryWithManualInput extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    public String getCompanyName(){
+        return (companyName != null) ? companyName.getText().toString() : "";
+    }
+
+    public String getCompanyAddress(){
+        return (companyAddress != null) ? companyAddress.getText().toString() : "";
     }
 
     /**

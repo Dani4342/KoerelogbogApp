@@ -17,8 +17,4 @@ public class MyApp extends Application {
         super.onCreate();
         mAppContext = getApplicationContext();
     }
-
-    public static SharedPreferences getPreferences(){
-        return mAppContext.getSharedPreferences("my_app_preferences",MODE_MULTI_PROCESS);
-    }
 }

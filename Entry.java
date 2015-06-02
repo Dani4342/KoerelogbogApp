@@ -15,9 +15,10 @@ public class Entry {
     private String driversName;
     private String companyName;
     private String companyAddress;
-    private int odometerFrom;
-    private int odometerTo;
+    private Integer odometerFrom;
+    private Integer odometerTo;
     private int SSN;
+    private int Distance;
 
     public Entry(){
 
@@ -39,7 +40,7 @@ public class Entry {
 
     public void setDriversName(String driversName) { this.driversName = driversName; }
 
-    public int getOdometerTo() { return odometerTo; }
+    public Integer getOdometerTo() { return odometerTo; }
 
     public void setOdometerTo(int odometerTo) { this.odometerTo = odometerTo; }
 
@@ -63,7 +64,13 @@ public class Entry {
 
     public void setDrivingPurpose(String drivingPurpose) { this.drivingPurpose = drivingPurpose; }
 
-    public int getOdometerFrom() { return odometerFrom; }
+    public Integer getOdometerFrom() { return odometerFrom; }
 
-    public void setOdometerFrom(int odometerFrom) { this.odometerFrom = odometerFrom; }
+    public void setOdometerFrom(int odometerFrom) {
+        this.odometerFrom = odometerFrom;
+
+        if(getOdometerTo() != null || getOdometerTo() > 0) {
+            Distance = getOdometerTo() - getOdometerFrom();
+        }
+    }
 }

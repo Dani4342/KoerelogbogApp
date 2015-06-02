@@ -11,9 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
-import android.R;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by Daniel on 4/14/2015.
@@ -48,26 +51,41 @@ public class MyCursorAdapter extends SimpleCursorAdapter {
 
         if (convertView == null) {
             //Locate all the views relevant to the listView elements
-            final TextView title = (TextView) rootView.findViewById(R.id.title);
-//            final TextView description = (TextView) rootView.findViewById(R.id.description);
-//            final TextView distanceTo = (TextView) rootView.findViewById(R.id.distance);
-//            final ImageView imageView = (ImageView) rootView.findViewById(R.id.listImage);
+            final TextView dateDriven = (TextView) rootView.findViewById(R.id.dateDriven);
+            final TextView description = (TextView) rootView.findViewById(R.id.description);
+            final TextView distanceDriven = (TextView) rootView.findViewById(R.id.distanceDriven);
+            final TextView driversName = (TextView) rootView.findViewById(R.id.driversName);
+            final TextView licensePlate = (TextView) rootView.findViewById(R.id.carsLicensePlate);
 
 
-            //Load image from web in a separate thread
-            ids.add(counter++, cursor.getInt(cursor.getColumnIndex(DatabaseHandler.ID)));
-            String imageUri = cursor.getString(cursor.getColumnIndex(DatabaseHandler.SSN));
-            if (!imageUri.equals("")) {
-
-            }
-
+            dateDriven.setText(cursor.getString(cursor.getColumnIndex(DatabaseHandler.DATE)));
+            description.setText(cursor.getString(cursor.getColumnIndex(DatabaseHandler.DRIVING_PURPOSE)));
+            distanceDriven.setText(String.valueOf(Integer.parseInt(cursor.getString(cursor.getColumnIndex(DatabaseHandler.ODOMETER_TO))) - Integer.parseInt(cursor.getString(cursor.getColumnIndex(DatabaseHandler.ODOMETER_FROM)))));
+            driversName.setText(cursor.getString(cursor.getColumnIndex(DatabaseHandler.DRIVERS_NAME)));
+            licensePlate.setText(cursor.getString(cursor.getColumnIndex(DatabaseHandler.LICENSE_PLATE)));
         }
     }
 
     @Override
     public void notifyDataSetChanged() {
         super.notifyDataSetChanged();
+    }
 
+    public ArrayList<Entry> getSpecificEntries(Date startDate, Date endDate, final Cursor cursor){
+        ArrayList<Entry> temp = new ArrayList<Entry>();
+        while(cursor.moveToNext()){
+            DateFormat df = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
+            Date date = null;
+            try {
+                date = df.parse(cursor.getString(cursor.getColumnIndex(DatabaseHandler.DATE)));
+
+            } catch (java.text.ParseException e) {}
+
+            if (date.before(endDate) && date.after(startDate)) {
+                
+            }
+        }
+        return (ArrayList<Entry>) temp.clone();
     }
 
 
